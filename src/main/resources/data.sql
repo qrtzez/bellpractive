@@ -16,8 +16,8 @@ INSERT INTO office (id, org_id, name, address, phone, is_active, version) VALUES
 
 
 INSERT INTO users (id, first_name, second_name, middle_name, position, phone, citizenship_id, is_identified, version) VALUES (1, 'Костя', 'Аркатов', 'Николаевич', 'Developer', '8-521-333-22-11', 1, true, 0 );
-INSERT INTO users (id, first_name, second_name, middle_name, position, phone, citizenship_id, is_identified, version) VALUES (2, 'Шляхов', 'Кирилл', 'Алексеевич', 'Lead', '8-111-222-45-65', 1, true, 0 );
-INSERT INTO users (id, first_name, second_name, middle_name, position, phone, citizenship_id, is_identified, version) VALUES (3, 'Путинцев', 'Андрей', 'Сергеевич', 'Director', '8-999-234-90-22', 2, true, 0 );
+INSERT INTO users (id, first_name, second_name, middle_name, position, phone, citizenship_id, is_identified, version) VALUES (2, 'Кирилл', 'Шляхов', 'Алексеевич', 'Lead', '8-111-222-45-65', 1, true, 0 );
+INSERT INTO users (id, first_name, second_name, middle_name, position, phone, citizenship_id, is_identified, version) VALUES (3, 'Андрей', 'Путинцев', 'Сергеевич', 'Director', '8-999-234-90-22', 2, true, 0 );
 
 
 INSERT INTO office_user (office_id, user_id) VALUES (1, 1);

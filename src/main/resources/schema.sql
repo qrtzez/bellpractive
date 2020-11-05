@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS users
     second_name    VARCHAR(50) COMMENT 'Фамилия',
     middle_name    VARCHAR(50) COMMENT 'Отчество',
     position       VARCHAR(50) NOT NULL COMMENT 'Должность',
-    phone          VARCHAR(50) COMMENT 'Телефон',
+    phone          VARCHAR(15) COMMENT 'Телефон',
     citizenship_id INTEGER COMMENT 'Поле, связывающая работника с его гражданством',
     FOREIGN KEY (citizenship_id) REFERENCES citizenship (id),
     is_identified  BOOLEAN COMMENT 'Идентификация',
@@ -31,14 +31,12 @@ CREATE TABLE IF NOT EXISTS type_document
 );
 COMMENT ON TABLE type_document IS 'Таблица типов документов';
 
-
-
 CREATE TABLE IF NOT EXISTS document_user
 (
     id         INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Уникальный идентификатор',
     user_doc_id INTEGER COMMENT 'Связь документа с работником',
     FOREIGN KEY (user_doc_id) REFERENCES users (id),
-    number     INTEGER COMMENT 'Номер документа работника',
+    number     varchar(15) COMMENT 'Номер документа работника',
     date       VARCHAR(20) COMMENT 'Дата выдачи документа работника',
     type_id    INTEGER COMMENT 'Идентификатор, связывающий документ с типом документа',
     FOREIGN KEY (type_id) REFERENCES type_document (id),
@@ -46,16 +44,15 @@ CREATE TABLE IF NOT EXISTS document_user
 );
 COMMENT ON TABLE document_user IS 'Таблица документов';
 
-
 CREATE TABLE IF NOT EXISTS organization
 (
     id        INTEGER     NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Уникальный идентификатор',
     name      VARCHAR(50) NOT NULL COMMENT 'Имя организации',
     full_name VARCHAR(50) NOT NULL COMMENT 'Полное имя организации',
-    inn       INTEGER     NOT NULL,
-    kpp       INTEGER     NOT NULL,
+    inn       VARCHAR(20)     NOT NULL,
+    kpp       VARCHAR(20)     NOT NULL,
     address   VARCHAR(50) NOT NULL COMMENT 'Адрес организации',
-    phone     VARCHAR(50) COMMENT 'Телефон организации',
+    phone     VARCHAR(20) COMMENT 'Телефон организации',
     is_active BOOLEAN,
     version   INTEGER     NOT NULL COMMENT 'Служебное поле Hibernate'
 
@@ -99,12 +96,10 @@ CREATE INDEX IX_country_code ON citizenship (code);
 CREATE INDEX IX_doc_type ON type_document (type);
 CREATE INDEX IX_doc_type_code ON type_document (code);
 
-
 CREATE UNIQUE INDEX UX_doc_user_doc_id ON document_user (user_doc_id);
 CREATE UNIQUE INDEX UX_doc_user_doc_number ON document_user (number);
 CREATE INDEX IX_doc_user_doc_date ON document_user (date);
 CREATE INDEX IX_doc_user_type_id ON document_user (type_id);
-
 
 CREATE UNIQUE INDEX UX_organization_full_name ON organization (full_name);
 CREATE UNIQUE INDEX UX_organization_inn  ON organization (inn);

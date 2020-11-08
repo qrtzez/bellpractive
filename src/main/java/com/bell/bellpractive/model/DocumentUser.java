@@ -7,9 +7,11 @@ import javax.persistence.*;
 public class DocumentUser {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
+    @Version
+    private Integer version;
 
     @Column(name = "number", length = 15)
     private String number;
@@ -17,10 +19,8 @@ public class DocumentUser {
     @Column(name = "date", length = 20)
     private String date;
 
-    @Version
-    private Integer version;
-
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
     @JoinColumn(name = "user_doc_id")
     private User user;
 

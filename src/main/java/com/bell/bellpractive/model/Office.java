@@ -13,6 +13,9 @@ public class Office {
     @Column(name = "id")
     private Long id;
 
+    @Version
+    private Integer version;
+
     @Column(name = "name", length = 50, nullable = false)
     private String name;
 
@@ -25,10 +28,12 @@ public class Office {
     @Column(name = "is_active", length = 50, nullable = false)
     private boolean isActive;
 
-    @Version
-    private Integer version;
-
-    @ManyToMany()
+    @ManyToMany(
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            }
+    )
     @JoinTable(name = "office_user",
             joinColumns = @JoinColumn(name = "office_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")

@@ -9,6 +9,9 @@ public class Organization {
     @Column(name = "id")
     private Long id;
 
+    @Version
+    private Integer version;
+
     @Column(name = "name", length = 50, nullable = false)
     private String name;
 
@@ -29,9 +32,6 @@ public class Organization {
 
     @Column(name = "is_active", length = 50, nullable = false)
     private boolean isActive;
-
-    @Version
-    private Integer version;
 
     public Long getId() {
         return id;

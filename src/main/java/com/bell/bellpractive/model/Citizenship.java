@@ -9,14 +9,14 @@ public class Citizenship {
     @Column(name = "id")
     private Long id;
 
+    @Version
+    private Integer version;
+
     @Column(name = "name", length = 50, nullable = false)
     private String name;
 
     @Column(name = "code", length = 50, nullable = false)
     private String code;
-
-    @Version
-    private Integer version;
 
     public Long getId() {
         return id;

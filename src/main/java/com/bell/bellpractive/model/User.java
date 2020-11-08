@@ -11,6 +11,9 @@ public class User {
     @Column(name = "id")
     private Long id;
 
+    @Version
+    private Integer version;
+
     @Column(name = "first_name", length = 50, nullable = false)
     private String firstName;
 
@@ -26,21 +29,18 @@ public class User {
     @Column(name = "phone", length = 15)
     private String phone;
 
-    @ManyToOne
-    @JoinColumn(name = "citizenship_id")
-    private Citizenship citizenship;
+    @Column(name = "is_identified")
+    private boolean isIdentified;
 
     @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
     private Set<Office> office;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY,mappedBy = "user", cascade = CascadeType.ALL)
     private DocumentUser documentUser;
 
-    @Column(name = "is_identified")
-    private boolean isIdentified;
-
-    @Version
-    private Integer version;
+    @ManyToOne
+    @JoinColumn(name = "citizenship_id")
+    private Citizenship citizenship;
 
     public Long getId() {
         return id;

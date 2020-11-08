@@ -1,4 +1,4 @@
-INSERT INTO type_document (id, type, code, version) VALUES (1, 'Паспорт РФ', '10', 0);
+INSERT INTO type_document (id, type, code, version) VALUES (1, 'Паспорт гражданина РФ', '21', 0);
 INSERT INTO type_document (id, type, code, version) VALUES (2, 'Загранпаспорт гражданина', '20', 0);
 
 INSERT INTO citizenship(id, name, code, version) VALUES (1, 'Российская Федерация', '643', 0);

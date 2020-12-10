@@ -15,16 +15,9 @@ INSERT INTO office (id, org_id, name, address, phone, is_active, version) VALUES
 INSERT INTO office (id, org_id, name, address, phone, is_active, version) VALUES (2, 2, 'Office Yandex', 'ул.Дзержинского, д.21', '8-983-856-12-65', true, 0 );
 
 
-INSERT INTO users (id, first_name, second_name, middle_name, position, phone, citizenship_id, is_identified, version) VALUES (1, 'Костя', 'Аркатов', 'Николаевич', 'Developer', '8-521-333-22-11', 1, true, 0 );
-INSERT INTO users (id, first_name, second_name, middle_name, position, phone, citizenship_id, is_identified, version) VALUES (2, 'Кирилл', 'Шляхов', 'Алексеевич', 'Lead', '8-111-222-45-65', 1, true, 0 );
-INSERT INTO users (id, first_name, second_name, middle_name, position, phone, citizenship_id, is_identified, version) VALUES (3, 'Андрей', 'Путинцев', 'Сергеевич', 'Director', '8-999-234-90-22', 2, true, 0 );
-
-
-INSERT INTO office_user (office_id, user_id) VALUES (1, 1);
-INSERT INTO office_user (office_id, user_id) VALUES (2, 2);
-INSERT INTO office_user (office_id, user_id) VALUES (1, 3);
-INSERT INTO office_user (office_id, user_id) VALUES (2, 1);
-
+INSERT INTO users (id, office_id, first_name,  second_name, middle_name, position, phone, citizenship_id, is_identified, version) VALUES (1, 1, 'Костя', 'Аркатов', 'Николаевич', 'Developer', '8-521-333-22-11', 1, true, 0 );
+INSERT INTO users (id, office_id, first_name, second_name, middle_name, position, phone, citizenship_id, is_identified, version) VALUES (2, 1,  'Кирилл', 'Шляхов', 'Алексеевич', 'Lead', '8-111-222-45-65', 1, true, 0 );
+INSERT INTO users (id, office_id, first_name, second_name, middle_name, position, phone, citizenship_id, is_identified, version) VALUES (3, 2, 'Андрей', 'Путинцев', 'Сергеевич', 'Director', '8-999-234-90-22', 2, true, 0 );
 
 
 INSERT INTO document_user (id, user_doc_id, number, date, type_id, version ) VALUES (1, 1, 11111, '12-11-1994', 1, 0);

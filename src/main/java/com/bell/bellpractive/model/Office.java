@@ -5,39 +5,60 @@ import org.hibernate.annotations.ManyToAny;
 import javax.persistence.*;
 import java.util.Set;
 
+/**
+ * Класс, описывающий офис
+ */
 @Entity
 @Table(name = "office")
 public class Office {
+    /**
+     * Идентификатор
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
+    /**
+     * Поле Hibernate
+     */
     @Version
     private Integer version;
 
+    /**
+     * Идентификатор организации
+     */
+    @Column(name = "org_id", nullable = false)
+    private Integer orgId;
+
+    /**
+     * Название офиса
+     */
     @Column(name = "name", length = 50, nullable = false)
     private String name;
 
+    /**
+     * Адрес офиса
+     */
     @Column(name = "address", length = 50, nullable = false)
     private String address;
 
+    /**
+     * Телефон офиса
+     */
     @Column(name = "phone", length = 50)
     private String phone;
 
+    /**
+     * Поле, показывающее рабочий ли офис
+     */
     @Column(name = "is_active", length = 50, nullable = false)
-    private boolean isActive;
+    private Boolean isActive;
 
-    @ManyToMany(
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            }
-    )
-    @JoinTable(name = "office_user",
-            joinColumns = @JoinColumn(name = "office_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
+    /**
+     * Список сотрудников офиса
+     */
+    @OneToMany(mappedBy="office")
     private Set<User> users;
 
     public Long getId() {
@@ -72,11 +93,11 @@ public class Office {
         this.phone = phone;
     }
 
-    public boolean isActive() {
+    public Boolean getIsActive() {
         return isActive;
     }
 
-    public void setActive(boolean active) {
+    public void setIsActive(Boolean active) {
         isActive = active;
     }
 
@@ -86,6 +107,14 @@ public class Office {
 
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    public Integer getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(Integer orgId) {
+        this.orgId = orgId;
     }
 
     public Set<User> getUsers() {

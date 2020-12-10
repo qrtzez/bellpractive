@@ -11,6 +11,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
+/**
+ * {@inheritDoc}
+ */
 @Repository
 public class TypeDocumentDaoImpl implements TypeDocumentDao {
     private final EntityManager entityManager;
@@ -20,6 +23,9 @@ public class TypeDocumentDaoImpl implements TypeDocumentDao {
         this.entityManager = entityManager;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public TypeDocument getCode(String code) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -31,6 +37,9 @@ public class TypeDocumentDaoImpl implements TypeDocumentDao {
         return query.getSingleResult();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<TypeDocument> allTypeDocument() {
         TypedQuery<TypeDocument> typeDocumentTypedQuery = entityManager.createQuery("SELECT td FROM TypeDocument td", TypeDocument.class);

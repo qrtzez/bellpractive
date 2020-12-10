@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS citizenship
 (
     id      INTEGER     NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Уникальный идентификатор',
     name    VARCHAR(50) NOT NULL COMMENT 'Страна',
-    code    VARCHAR(50) NOT NULL COMMENT 'Код страны',
+    code    VARCHAR(20) NOT NULL COMMENT 'Код страны',
     version INTEGER     NOT NULL COMMENT 'Служебное поле Hibernate'
 );
 COMMENT ON TABLE citizenship IS 'Таблица стран';
@@ -10,6 +10,7 @@ COMMENT ON TABLE citizenship IS 'Таблица стран';
 CREATE TABLE IF NOT EXISTS users
 (
     id             INTEGER     NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Уникальный идентификатор',
+    office_id      INTEGER     NOT NULL COMMENT 'Идентификатор Офиса',
     first_name     VARCHAR(50) NOT NULL COMMENT 'Имя',
     second_name    VARCHAR(50) COMMENT 'Фамилия',
     middle_name    VARCHAR(50) COMMENT 'Отчество',
@@ -24,23 +25,23 @@ COMMENT ON TABLE users IS 'Таблица работников';
 
 CREATE TABLE IF NOT EXISTS type_document
 (
-    id      INTEGER      NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Уникальный идентификатор',
+    id      INTEGER     NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Уникальный идентификатор',
     type    VARCHAR(50) NOT NULL COMMENT 'Тип документа',
-    code    VARCHAR(20)  NOT NULL COMMENT 'Код документа',
+    code    VARCHAR(20) NOT NULL COMMENT 'Код документа',
     version INTEGER     NOT NULL COMMENT 'Служебное поле Hibernate'
 );
 COMMENT ON TABLE type_document IS 'Таблица типов документов';
 
 CREATE TABLE IF NOT EXISTS document_user
 (
-    id         INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Уникальный идентификатор',
+    id          INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Уникальный идентификатор',
     user_doc_id INTEGER COMMENT 'Связь документа с работником',
     FOREIGN KEY (user_doc_id) REFERENCES users (id),
-    number     varchar(15) COMMENT 'Номер документа работника',
-    date       VARCHAR(20) COMMENT 'Дата выдачи документа работника',
-    type_id    INTEGER COMMENT 'Идентификатор, связывающий документ с типом документа',
+    number      VARCHAR(15) COMMENT 'Номер документа работника',
+    date        VARCHAR(20) COMMENT 'Дата выдачи документа работника',
+    type_id     INTEGER COMMENT 'Идентификатор, связывающий документ с типом документа',
     FOREIGN KEY (type_id) REFERENCES type_document (id),
-    version    INTEGER NOT NULL COMMENT 'Служебное поле Hibernate'
+    version     INTEGER NOT NULL COMMENT 'Служебное поле Hibernate'
 );
 COMMENT ON TABLE document_user IS 'Таблица документов';
 
@@ -49,8 +50,8 @@ CREATE TABLE IF NOT EXISTS organization
     id        INTEGER     NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Уникальный идентификатор',
     name      VARCHAR(50) NOT NULL COMMENT 'Имя организации',
     full_name VARCHAR(50) NOT NULL COMMENT 'Полное имя организации',
-    inn       VARCHAR(20)     NOT NULL,
-    kpp       VARCHAR(20)     NOT NULL,
+    inn       VARCHAR(20) NOT NULL,
+    kpp       VARCHAR(20) NOT NULL,
     address   VARCHAR(50) NOT NULL COMMENT 'Адрес организации',
     phone     VARCHAR(20) COMMENT 'Телефон организации',
     is_active BOOLEAN,
@@ -73,16 +74,6 @@ CREATE TABLE IF NOT EXISTS office
 );
 COMMENT ON TABLE office IS 'Таблица офисов';
 
-CREATE TABLE IF NOT EXISTS office_user
-(
-    office_id INTEGER COMMENT 'Идентификатор офиса',
-    user_id   INTEGER COMMENT 'Идентификатор работника',
-
-    PRIMARY KEY (office_id, user_id),
-
-    FOREIGN KEY (office_id) REFERENCES Office (id),
-    FOREIGN KEY (user_id) REFERENCES users (id)
-);
 
 CREATE INDEX IX_user_first_name ON users (first_name);
 CREATE INDEX IX_user_second_name ON users (second_name);
@@ -102,12 +93,11 @@ CREATE INDEX IX_doc_user_doc_date ON document_user (date);
 CREATE INDEX IX_doc_user_type_id ON document_user (type_id);
 
 CREATE UNIQUE INDEX UX_organization_full_name ON organization (full_name);
-CREATE UNIQUE INDEX UX_organization_inn  ON organization (inn);
-CREATE UNIQUE INDEX UX_organization_kpp  ON organization (kpp);
+CREATE UNIQUE INDEX UX_organization_inn ON organization (inn);
+CREATE UNIQUE INDEX UX_organization_kpp ON organization (kpp);
 
 CREATE INDEX IX_office_name ON office (name);
 CREATE INDEX IX_office_Org_Id ON office (org_id);
 
-CREATE INDEX IX_Employee_Office_Id ON office_user(office_id);
-CREATE INDEX IX_Office_Employee_Id ON office_user (user_id);
+
 

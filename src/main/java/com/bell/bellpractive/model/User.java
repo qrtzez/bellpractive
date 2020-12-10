@@ -1,47 +1,96 @@
 package com.bell.bellpractive.model;
 
-import javax.persistence.*;
-import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.*;
+
+
+/**
+ * Класс, описывающий сотрудника
+ */
 @Entity
 @Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+
+    /**
+     * Идентификатор
+     */
     private Long id;
 
+    /**
+     * Поле Hibernate
+     */
     @Version
     private Integer version;
 
+    /**
+     * Поле идентификатора офиса
+     */
+    @Column(name = "office_id", nullable = false)
+    private Integer officeId;
+
+    /**
+     * Имя
+     */
     @Column(name = "first_name", length = 50, nullable = false)
     private String firstName;
 
+    /**
+     * Фамилия
+     */
     @Column(name = "second_name", length = 50)
     private String secondName;
 
+    /**
+     * Отчество
+     */
     @Column(name = "middle_name", length = 50)
     private String middleName;
 
+    /**
+     * Должность
+     */
     @Column(name = "position", length = 50, nullable = false)
     private String position;
 
+    /**
+     * Телефон
+     */
     @Column(name = "phone", length = 15)
     private String phone;
 
+    /**
+     * Поле идентификации
+     */
     @Column(name = "is_identified")
     private boolean isIdentified;
 
-    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
-    private Set<Office> office;
+    /**
+     * Поле, связывающее сотрудника с офисом
+     */
+    @ManyToOne( fetch = FetchType.EAGER)
+    @JoinColumn(name = "office_id",insertable=false, updatable=false)
+    @JsonIgnore
+    private Office office;
 
-    @OneToOne(fetch = FetchType.LAZY,mappedBy = "user", cascade = CascadeType.ALL)
+    /**
+     * Поле, связывающее сотрудника
+     */
+    @OneToOne(mappedBy = "user",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
     private DocumentUser documentUser;
 
+    /**
+     * Поле, связывающее сотрудника с гражданство
+     */
     @ManyToOne
     @JoinColumn(name = "citizenship_id")
     private Citizenship citizenship;
 
+    
     public Long getId() {
         return id;
     }
@@ -98,11 +147,19 @@ public class User {
         this.citizenship = citizenship;
     }
 
-    public Set<Office> getOffice() {
+    public Integer getOfficeId() {
+        return officeId;
+    }
+
+    public void setOfficeId(Integer officeId) {
+        this.officeId = officeId;
+    }
+
+    public Office getOffice() {
         return office;
     }
 
-    public void setOffice(Set<Office> office) {
+    public void setOffice(Office office) {
         this.office = office;
     }
 
@@ -114,11 +171,11 @@ public class User {
         this.documentUser = documentUser;
     }
 
-    public boolean isIdentified() {
+    public boolean getIsIdentified() {
         return isIdentified;
     }
 
-    public void setIdentified(boolean identified) {
+    public void setIsIdentified(boolean identified) {
         isIdentified = identified;
     }
 

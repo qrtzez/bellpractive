@@ -1,22 +1,42 @@
 package com.bell.bellpractive.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
+/**
+ * Класс, описывающий гражданство
+ */
 @Entity
+@Table(name = "citizenship")
 public class Citizenship {
+    /**
+     * Идентификатор
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
+    /**
+     * Поле Hibernate
+     */
     @Version
     private Integer version;
 
+    /**
+     * Название страны
+     */
     @Column(name = "name", length = 50, nullable = false)
     private String name;
 
-    @Column(name = "code", length = 50, nullable = false)
+    /**
+     * Код страны
+     */
+    @Column(name = "code", length = 20, nullable = false)
     private String code;
+
+    public Citizenship() {
+    }
 
     public Long getId() {
         return id;

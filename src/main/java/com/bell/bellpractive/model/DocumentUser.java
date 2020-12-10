@@ -2,31 +2,55 @@ package com.bell.bellpractive.model;
 
 import javax.persistence.*;
 
+/**
+ * Класс, описывающий документ сотрудника
+ */
 @Entity
 @Table(name = "document_user")
 public class DocumentUser {
-
+    /**
+     * Идентификатор
+     */
     @Id
     @Column(name = "id")
     private Long id;
 
+    /**
+     * Поле Hibernate
+     */
     @Version
     private Integer version;
 
+    /**
+     * Номер документа
+     */
     @Column(name = "number", length = 15)
     private String number;
 
+    /**
+     * Дата получения документа
+     */
     @Column(name = "date", length = 20)
     private String date;
 
+
+    /**
+     * Поле, связывающее документ с сотрудником
+     */
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "user_doc_id")
     private User user;
 
-    @ManyToOne
-    @Column(name = "type_id")
+    /**
+     * Поле, связывающее документ сотрудника с типом документа
+     */
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "type_id")
     private TypeDocument typeDocument;
+
+    public DocumentUser() {
+    }
 
     public Long getId() {
         return id;
